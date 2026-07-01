@@ -16,6 +16,16 @@ body {
 	font-family: Inter, system-ui, sans-serif;
 	color: var(--ink);
 	background: var(--cream);
+	opacity: 0;
+	animation: pageFadeIn .7s ease forwards;
+}
+
+@keyframes pageFadeIn {
+	to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body { animation: none; opacity: 1; }
 }
 
 img { max-width: 100%; display: block; }
