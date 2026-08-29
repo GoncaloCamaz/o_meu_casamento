@@ -75,9 +75,23 @@ a { color: inherit; text-decoration: none; }
 .hero-bg {
 	position: absolute;
 	inset: 0;
-	background:
+	background-image:
 		linear-gradient(rgba(43, 36, 31, .28), rgba(43, 36, 31, .55)),
-		url("images/noivos/foto_2.jpeg") center/cover;
+		url("images/noivos/foto_2.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover, cover;
+	background-position: 0 0, 50% 8%;
+	animation: heroKenBurns 26s ease-in-out infinite alternate;
+}
+
+@keyframes heroKenBurns {
+	0% { background-position: 0 0, 50% 6%; transform: scale(1); }
+	50% { background-position: 0 0, 50% 52%; transform: scale(1.09); }
+	100% { background-position: 0 0, 50% 96%; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-bg { animation: none; background-position: 0 0, 50% 22%; }
 }
 
 .hero-content {
@@ -109,6 +123,41 @@ h3 { font-size: 2rem; }
 	max-width: 680px;
 	margin: 24px auto 0;
 	font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.countdown {
+	margin-top: 40px;
+	display: flex;
+	justify-content: center;
+	gap: clamp(14px, 3vw, 28px);
+	flex-wrap: wrap;
+}
+
+.countdown-unit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 72px;
+	padding: 14px 6px;
+	background: rgba(255, 255, 255, .1);
+	border: 1px solid rgba(255, 255, 255, .28);
+	border-radius: 20px;
+	backdrop-filter: blur(6px);
+}
+
+.countdown-unit span {
+	font-family: "Cormorant Garamond", serif;
+	font-size: clamp(2rem, 4.5vw, 3rem);
+	font-weight: 700;
+	line-height: 1;
+}
+
+.countdown-unit small {
+	margin-top: 6px;
+	font-size: .72rem;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, .78);
 }
 
 .hero-actions {
@@ -292,26 +341,66 @@ dd a:hover { text-decoration: underline; }
 
 .timeline strong { color: var(--terracotta); }
 
-.gallery {
-	background: var(--ink);
-	color: var(--paper);
+.rsvp {
+	place-items: center;
+	text-align: center;
+	background:
+		radial-gradient(circle at bottom right, rgba(167, 111, 85, .28), transparent 45%),
+		radial-gradient(circle at top left, rgba(111, 118, 85, .22), transparent 40%),
+		var(--ink);
 }
 
-.gallery-intro { margin-bottom: 34px; }
-.gallery .eyebrow { color: #e7b89c; }
-
-.masonry {
-	columns: 3 260px;
-	column-gap: 18px;
+.rsvp-card {
+	max-width: 640px;
+	background: var(--paper);
+	border-radius: 40px;
+	padding: clamp(36px, 6vw, 64px);
+	box-shadow: 0 32px 90px rgba(0, 0, 0, .45);
 }
 
-.masonry img {
-	width: 100%;
-	margin-bottom: 18px;
-	border-radius: 28px;
-	break-inside: avoid;
-	filter: saturate(.92) contrast(.96);
+.rsvp-card .eyebrow { color: var(--terracotta); }
+
+.rsvp-card h2 {
+	font-size: clamp(2.2rem, 5vw, 3.4rem);
+	margin-top: 14px;
 }
+
+.rsvp-card p:not(.eyebrow) {
+	margin: 20px auto 0;
+	color: var(--muted);
+	font-size: 1.08rem;
+	line-height: 1.7;
+	max-width: 460px;
+}
+
+.rsvp-card .rsvp-note {
+	margin-top: 12px;
+	font-size: .92rem;
+	font-style: italic;
+}
+
+.rsvp-actions {
+	margin-top: 32px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.button.whatsapp {
+	gap: 10px;
+	background: #25D366;
+	color: #06301b;
+	padding: 0 24px;
+}
+
+.button.whatsapp svg {
+	width: 20px;
+	height: 20px;
+	flex-shrink: 0;
+}
+
+.button.whatsapp:hover { background: #1ebc59; }
 
 footer {
 	text-align: center;
@@ -348,8 +437,9 @@ footer {
 @media (max-width: 520px) {
 	.section-panel { padding-inline: 16px; }
 	.story-grid article,
-	.details-card { border-radius: 24px; }
-	.hero-actions { flex-direction: column; }
+	.details-card,
+	.rsvp-card { border-radius: 24px; }
+	.hero-actions,
+	.rsvp-actions { flex-direction: column; }
 	.button { width: 100%; }
-	.masonry { columns: 1; }
 }
