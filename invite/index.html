@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Margarida &amp; Gonçalo — Convite</title>
+	<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+	<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png">
+	<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="../favicon.ico" sizes="any">
+	<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../invite.css" />
+</head>
+<body>
+	<div class="envelope-clip" id="envelopeClip" role="button" tabindex="0" aria-label="Abrir convite de casamento">
+		<div class="envelope-shape">
+			<div class="pocket"></div>
+			<div class="flap"></div>
+		</div>
+		<div class="texture" aria-hidden="true"></div>
+		<div class="seal">M&amp;G</div>
+		<p class="invite-hint" id="inviteHint">Toca para abrir o convite</p>
+	</div>
+
+	<script>
+		const clip = document.getElementById('envelopeClip');
+		const hint = document.getElementById('inviteHint');
+
+		function goToSite() {
+			window.location.href = '/';
+		}
+
+		function handleActivate() {
+			if (clip.classList.contains('open')) return;
+			clip.classList.add('open');
+			hint.textContent = '';
+			setTimeout(goToSite, 950);
+		}
+
+		clip.addEventListener('click', handleActivate);
+		clip.addEventListener('keydown', e => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				handleActivate();
+			}
+		});
+	</script>
+</body>
+</html>
