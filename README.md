@@ -23,7 +23,7 @@ images/          → fotos (já otimizadas, não voltes a meter uma de 6MB diret
 ## Correr localmente
 
 ```
-./serve.sh
+python3 -m http.server 8011
 ```
 
 Abre em `http://localhost:8011`.
