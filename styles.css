@@ -293,6 +293,27 @@ dd {
 	grid-template-columns: minmax(0, .9fr) minmax(280px, 1.1fr);
 	gap: 44px;
 	background: var(--paper);
+	align-items: stretch;
+}
+
+.details .details-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+@media (min-width: 821px) {
+	.details .floating-photo {
+		position: relative;
+		height: 100%;
+		min-height: 420px;
+	}
+
+	.details .floating-photo img {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+	}
 }
 
 .details-card dl {
@@ -509,7 +530,10 @@ footer {
 	.schedule {
 		grid-template-columns: 1fr;
 	}
-	.floating-photo img { height: 420px; }
+	.schedule .schedule-content { order: 1; }
+	.schedule .floating-photo { order: 2; }
+	.floating-photo img,
+	.details .floating-photo img { height: 420px; max-height: none; }
 	.timeline div { grid-template-columns: 1fr; }
 	h1 { font-size: clamp(4rem, 22vw, 8rem); }
 }
