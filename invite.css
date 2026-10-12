@@ -1,9 +1,9 @@
 :root {
 	--muted: #75675c;
 	--beige: #d8c6b5;
-	--env: #48573a;
-	--env-dark: #384329;
-	--gold: #cda44e;
+	--env: #335d3a;
+	--env-dark: #2a4a30;
+	--gold: #e3bb63;
 }
 
 * { box-sizing: border-box; }
@@ -17,7 +17,10 @@ html, body {
 body {
 	height: 100vh;
 	height: 100dvh;
-	background: var(--env-dark);
+	background:
+		radial-gradient(circle at 24% 18%, rgba(227, 187, 99, .28), transparent 55%),
+		radial-gradient(circle at 82% 88%, rgba(51, 93, 58, .16), transparent 50%),
+		var(--beige);
 	font-family: Inter, system-ui, sans-serif;
 	opacity: 1;
 	animation: pageFadeIn .6s ease;
@@ -39,9 +42,12 @@ body {
 
 .envelope-shape {
 	position: relative;
-	width: 100vw;
-	height: 100vh;
-	height: 100dvh;
+	width: min(88vw, 420px);
+	height: min(66vw, 315px);
+	background: var(--env-dark);
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 0 30px 70px rgba(43, 36, 31, .4);
 }
 
 .pocket {
@@ -95,21 +101,24 @@ body {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: clamp(72px, 14vw, 120px);
-	height: clamp(72px, 14vw, 120px);
+	width: clamp(84px, 17vw, 132px);
+	height: clamp(102px, 20.6vw, 160px);
 	transform: translate(-50%, -50%);
-	border-radius: 50%;
-	background: var(--gold);
-	color: var(--env-dark);
+	border-radius: 50% / 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-family: "Cormorant Garamond", serif;
-	font-weight: 700;
-	font-size: clamp(1.2rem, 2.6vw, 1.8rem);
-	box-shadow: 0 10px 24px rgba(0, 0, 0, .4), inset 0 2px 6px rgba(255, 255, 255, .35);
+	overflow: hidden;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, .4);
 	transition: opacity .5s ease, transform .5s ease;
 	z-index: 6;
+}
+
+.seal img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
 }
 
 .envelope-clip.open .seal {
@@ -127,7 +136,7 @@ body {
 	font-size: .85rem;
 	letter-spacing: .08em;
 	text-transform: uppercase;
-	color: rgba(246, 239, 230, .85);
+	color: var(--muted);
 	animation: pulse 2.4s ease-in-out 1s infinite;
 	transition: opacity .3s ease;
 	z-index: 6;
@@ -138,30 +147,17 @@ body {
 	50% { opacity: 1; }
 }
 
+@media (min-width: 641px) {
+	.envelope-shape {
+		width: min(50vw, 520px);
+		height: min(37.5vw, 390px);
+		border-radius: 24px;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.flap, .seal { transition: none; }
 	body { animation: none; opacity: 1; }
 	.invite-hint { animation: none; }
 }
 
-@media (max-width: 640px) {
-	body {
-		background:
-			radial-gradient(circle at 24% 18%, rgba(205, 164, 78, .22), transparent 55%),
-			radial-gradient(circle at 82% 88%, rgba(167, 111, 85, .18), transparent 50%),
-			var(--beige);
-	}
-
-	.envelope-shape {
-		width: min(88vw, 420px);
-		height: min(66vw, 315px);
-		background: var(--env-dark);
-		border-radius: 20px;
-		overflow: hidden;
-		box-shadow: 0 30px 70px rgba(43, 36, 31, .4);
-	}
-
-	.invite-hint {
-		color: var(--muted);
-	}
-}
