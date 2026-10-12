@@ -186,7 +186,7 @@ a {
   background-color: var(--ink);
   background-image:
     linear-gradient(rgba(43, 36, 31, 0.28), rgba(43, 36, 31, 0.55)),
-    url("images/noivos/foto.jpeg");
+    url("images/noivos/foto.webp");
   background-repeat: no-repeat;
   background-size: cover, cover;
   background-position:
@@ -510,7 +510,7 @@ dd a:hover {
 }
 
 .timeline strong {
-  color: var(--logo-yellow-deep);
+  color: var(--logo-green);
 }
 
 .rsvp {
