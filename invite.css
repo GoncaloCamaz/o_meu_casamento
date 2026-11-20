@@ -8,6 +8,10 @@
 
 * { box-sizing: border-box; }
 
+/* Crossfade suave do convite para o site (Chrome 126+, Safari 18.2+) */
+@view-transition { navigation: auto; }
+::view-transition-group(root) { animation-duration: .5s; }
+
 html, body {
 	margin: 0;
 	height: 100%;

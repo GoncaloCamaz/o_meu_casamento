@@ -40,6 +40,20 @@ body {
   }
 }
 
+/* Crossfade suave vindo do convite (Chrome 126+, Safari 18.2+) */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(root) {
+  animation-duration: 0.5s;
+}
+/* Quando o crossfade já trata da entrada, o fade do body só ia
+   mostrar um ecrã vazio pelo meio */
+.via-transition body {
+  animation: none;
+  opacity: 1;
+}
+
 img {
   max-width: 100%;
   display: block;

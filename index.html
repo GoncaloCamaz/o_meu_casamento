@@ -18,6 +18,19 @@
     />
     <link rel="icon" href="images/favicon.ico?v=6" sizes="any" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=6" />
+    <!-- A foto do topo é um background do CSS: sem isto só é pedida no fim -->
+    <link
+      rel="preload"
+      as="image"
+      href="images/noivos/foto.webp"
+      fetchpriority="high"
+    />
+    <script>
+      window.addEventListener("pagereveal", (e) => {
+        if (e.viewTransition)
+          document.documentElement.classList.add("via-transition");
+      });
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -59,8 +72,8 @@
         <div class="hero-bg"></div>
         <div class="hero-content reveal">
           <p class="eyebrow">03 Julho 2027</p>
-          <h1>Vamos Casar!</h1>
-          <p class="subtitle">
+          <h1 id="heroTitle">Vamos Casar!</h1>
+          <p class="subtitle" id="heroSubtitle">
             E queremos muito que celebres connosco este dia!
           </p>
           <div
@@ -374,19 +387,52 @@
     </main>
 
     <script>
-      const weddingDate = new Date("2027-07-03T12:00:00Z");
+      // Horas em UTC: em julho Lisboa está em UTC+1 (12:00Z = 13:00 em Portugal)
+      const weddingDate = new Date("2027-07-03T12:00:00Z"); // 13:00 início da cerimónia
+      const ceremonyEnd = new Date("2027-07-03T13:00:00Z"); // 14:00 fim da cerimónia
+      const dayAfter = new Date("2027-07-03T23:00:00Z"); // 00:00 de 4 de julho
       const cdDays = document.getElementById("cd-days");
       const cdHours = document.getElementById("cd-hours");
       const cdMinutes = document.getElementById("cd-minutes");
       const cdSeconds = document.getElementById("cd-seconds");
       const countdown = document.getElementById("countdown");
+      const heroTitle = document.getElementById("heroTitle");
+      const heroSubtitle = document.getElementById("heroSubtitle");
+      let countdownTimer;
+
+      function setHero(title, subtitle) {
+        countdown.style.display = "none";
+        if (heroTitle.textContent !== title) heroTitle.textContent = title;
+        if (heroSubtitle.textContent !== subtitle)
+          heroSubtitle.textContent = subtitle;
+      }
 
       function updateCountdown() {
-        const diff = weddingDate.getTime() - Date.now();
+        const now = Date.now();
+        const diff = weddingDate.getTime() - now;
+
+        if (now >= dayAfter.getTime()) {
+          setHero(
+            "Já casámos!!",
+            "Obrigado a todos por fazerem parte do dia mais feliz das nossas vidas! 💛",
+          );
+          clearInterval(countdownTimer);
+          return;
+        }
+
+        if (now >= ceremonyEnd.getTime()) {
+          setHero(
+            "Já casámos!!",
+            "Agora siga para a festa! O padre já fez a parte dele, agora é a vez do DJ 🥂🕺",
+          );
+          return;
+        }
 
         if (diff <= 0) {
-          countdown.textContent = "Hoje é o grande dia!";
-          clearInterval(countdownTimer);
+          setHero(
+            "Estamos a casar!",
+            "Neste momento estamos no altar. Telemóveis em silêncio, lencinhos na mão e ninguém se oponha, por favor! 🤫💍",
+          );
           return;
         }
 
@@ -402,8 +448,8 @@
         cdSeconds.textContent = String(seconds).padStart(2, "0");
       }
 
+      countdownTimer = setInterval(updateCountdown, 1000);
       updateCountdown();
-      const countdownTimer = setInterval(updateCountdown, 1000);
 
       function decodePhone(encoded) {
         return encoded

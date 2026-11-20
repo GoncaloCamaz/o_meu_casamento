@@ -29,6 +29,8 @@
 	<script>
 		const clip = document.getElementById('envelopeClip');
 		const hint = document.getElementById('inviteHint');
+		const hintText = hint.textContent;
+		let navTimer;
 
 		function goToSite() {
 			window.location.href = '/';
@@ -38,8 +40,36 @@
 			if (clip.classList.contains('open')) return;
 			clip.classList.add('open');
 			hint.textContent = '';
-			setTimeout(goToSite, 950);
+			// A aba já está praticamente invisível aos ~800ms; não vale a pena esperar mais
+			navTimer = setTimeout(goToSite, 800);
 		}
+
+		// Enquanto o convidado olha para o envelope, vai buscando o site,
+		// para que ao tocar a página seguinte já esteja em cache.
+		function warmUpSite() {
+			fetch('/', { credentials: 'same-origin' }).catch(() => {});
+			fetch('/styles.css').catch(() => {});
+			new Image().src = '/images/noivos/foto.webp';
+		}
+		window.addEventListener('load', () => {
+			if ('requestIdleCallback' in window) {
+				requestIdleCallback(warmUpSite, { timeout: 1000 });
+			} else {
+				setTimeout(warmUpSite, 200);
+			}
+		});
+
+		function closeEnvelope() {
+			clearTimeout(navTimer);
+			clip.classList.remove('open');
+			hint.textContent = hintText;
+		}
+
+		// Ao voltar atrás, o browser pode restaurar a página tal como estava
+		// (back-forward cache), com o envelope aberto. Fecha-o de novo.
+		window.addEventListener('pageshow', e => {
+			if (e.persisted) closeEnvelope();
+		});
 
 		clip.addEventListener('click', handleActivate);
 		clip.addEventListener('keydown', e => {
